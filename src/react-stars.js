@@ -21,6 +21,7 @@ const defaultStatusStyles = {
   width: 'auto',
   top: '-5px',
   textAlign: 'left',
+  pointerEvents: 'none'
 }
 
 const getHalfStarStyles = (color, uniqueness) => {
@@ -215,21 +216,24 @@ class ReactStars extends Component {
       const status = hoverIndex === (i + 1) ? this.props.status[i + 1] : '';
 
       return (
-        <span>
+        <span key={i} >
           <span
             className={starClass}
             style={style}
-            key={i}
-            data-index={i}
-            data-forhalf={char}
-            onMouseOver={this.mouseOver.bind(this)}
-            onMouseMove={this.mouseOver.bind(this)}
-            onMouseLeave={this.mouseLeave.bind(this)}
-            onClick={this.clicked.bind(this)}>
+          >
             <span style={statusStyle}>
               {showStatus && status}
             </span>
-            {char}
+            <span
+              data-index={i}
+              data-forhalf={char}
+              onMouseOver={this.mouseOver.bind(this)}
+              onMouseMove={this.mouseOver.bind(this)}
+              onMouseLeave={this.mouseLeave.bind(this)}
+              onClick={this.clicked.bind(this)}
+            >
+              {char}
+            </span>
           </span>
         </span>
       )

@@ -43,7 +43,8 @@ var defaultStatusStyles = {
   position: 'absolute',
   width: 'auto',
   top: '-5px',
-  textAlign: 'left'
+  textAlign: 'left',
+  pointerEvents: 'none'
 };
 
 var getHalfStarStyles = function getHalfStarStyles(color, uniqueness) {
@@ -275,25 +276,30 @@ var ReactStars = function (_Component) {
 
         return _react2.default.createElement(
           'span',
-          null,
+          { key: i },
           _react2.default.createElement(
             'span',
             {
               className: starClass,
-              style: style,
-              key: i,
-              'data-index': i,
-              'data-forhalf': char,
-              onMouseOver: _this2.mouseOver.bind(_this2),
-              onMouseMove: _this2.mouseOver.bind(_this2),
-              onMouseLeave: _this2.mouseLeave.bind(_this2),
-              onClick: _this2.clicked.bind(_this2) },
+              style: style
+            },
             _react2.default.createElement(
               'span',
               { style: statusStyle },
               showStatus && status
             ),
-            char
+            _react2.default.createElement(
+              'span',
+              {
+                'data-index': i,
+                'data-forhalf': char,
+                onMouseOver: _this2.mouseOver.bind(_this2),
+                onMouseMove: _this2.mouseOver.bind(_this2),
+                onMouseLeave: _this2.mouseLeave.bind(_this2),
+                onClick: _this2.clicked.bind(_this2)
+              },
+              char
+            )
           )
         );
       });
