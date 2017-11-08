@@ -20,6 +20,7 @@ const defaultStatusStyles = {
   position: 'absolute',
   width: 'auto',
   top: '-5px',
+  textAlign: 'left',
 }
 
 const getHalfStarStyles = (color, uniqueness) => {

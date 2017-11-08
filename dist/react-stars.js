@@ -42,7 +42,8 @@ var defaultStatusStyles = {
   float: 'left',
   position: 'absolute',
   width: 'auto',
-  top: '-5px'
+  top: '-5px',
+  textAlign: 'left'
 };
 
 var getHalfStarStyles = function getHalfStarStyles(color, uniqueness) {
