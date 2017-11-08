@@ -134,7 +134,7 @@ class ReactStars extends Component {
       index = index + 1
     }
     if (this.props.onHover) {
-      this.props.onHover(index)
+      this.props.onHover(true, index);
     }
     this.setState({
       stars: this.getStars(index),
@@ -155,6 +155,9 @@ class ReactStars extends Component {
     if (config.half) {
       halfStar.hidden = !this.isDecimal(value)
       halfStar.at = Math.floor(this.state.value)
+    }
+    if (this.props.onHover) {
+      this.props.onHover(false);
     }
     this.setState({
       stars: this.getStars(),
