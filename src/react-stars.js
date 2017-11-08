@@ -18,7 +18,8 @@ const defaultStatusStyles = {
   color: '#666',
   float: 'left',
   position: 'absolute',
-  width: '75px',
+  width: 'auto',
+  top: '-5px',
 }
 
 const getHalfStarStyles = (color, uniqueness) => {
@@ -52,7 +53,8 @@ class ReactStars extends Component {
       halfStar: {
         at: Math.floor(props.value),
         hidden: props.half && props.value % 1 < 0.5
-      }
+      },
+      hoverIndex: 0,
     }
 
     this.state.config = {
@@ -134,6 +136,7 @@ class ReactStars extends Component {
     }
     this.setState({
       stars: this.getStars(index),
+      hoverIndex: index,
     })
   }
 
@@ -152,7 +155,8 @@ class ReactStars extends Component {
       halfStar.at = Math.floor(this.state.value)
     }
     this.setState({
-      stars: this.getStars()
+      stars: this.getStars(),
+      hoverIndex: 0,
     })
   }
 
@@ -187,7 +191,7 @@ class ReactStars extends Component {
   }
 
   renderStars() {
-    const { halfStar, stars, uniqueness, config, currentStatus } = this.state
+    const { halfStar, stars, uniqueness, config, currentStatus, hoverIndex } = this.state
     const { color1, color2, size, char, half, edit, showStatus, statusColor,
     statusWidth, statusFontSize } = config
     const selectedStars = stars.filter((star) => star.active);
@@ -207,7 +211,7 @@ class ReactStars extends Component {
         fontSize: `${statusFontSize}px`
       });
 
-      const status = selectedStars.length === (i + 1) ? this.props.status[i + 1] : '';
+      const status = hoverIndex === (i + 1) ? this.props.status[i + 1] : '';
 
       return (
         <span>
@@ -282,7 +286,7 @@ ReactStars.defaultProps = {
   },
   statusColor: '#666',
   statusFontSize: '12',
-  statusWidth: '80',
+  statusWidth: 'auto',
   onChange: () => { }
 };
 
