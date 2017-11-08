@@ -286,7 +286,7 @@ ReactStars.defaultProps = {
   },
   statusColor: '#666',
   statusFontSize: '12',
-  statusWidth: 'auto',
+  statusWidth: '80',
   onChange: () => { }
 };
 
