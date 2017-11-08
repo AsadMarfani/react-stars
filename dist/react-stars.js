@@ -31,10 +31,17 @@ var parentStyles = {
 
 var defaultStyles = {
   position: 'relative',
-  overflow: 'hidden',
   cursor: 'pointer',
   display: 'block',
   float: 'left'
+};
+
+var defaultStatusStyles = {
+  fontSize: '12px',
+  color: '#666',
+  float: 'left',
+  position: 'absolute',
+  width: '75px'
 };
 
 var getHalfStarStyles = function getHalfStarStyles(color, uniqueness) {
@@ -72,7 +79,11 @@ var ReactStars = function (_Component) {
       // color of an active star
       color2: props.color2,
       half: props.half,
-      edit: props.edit
+      edit: props.edit,
+      showStatus: props.showStatus,
+      statusColor: props.statusColor,
+      statusFontSize: props.statusFontSize,
+      statusWidth: props.statusWidth
     };
 
     return _this;
@@ -143,6 +154,9 @@ var ReactStars = function (_Component) {
         halfStar.at = index;
       } else {
         index = index + 1;
+      }
+      if (this.props.onHover) {
+        this.props.onHover(index);
       }
       this.setState({
         stars: this.getStars(index)
@@ -219,14 +233,22 @@ var ReactStars = function (_Component) {
           halfStar = _state5.halfStar,
           stars = _state5.stars,
           uniqueness = _state5.uniqueness,
-          config = _state5.config;
+          config = _state5.config,
+          currentStatus = _state5.currentStatus;
       var color1 = config.color1,
           color2 = config.color2,
           size = config.size,
           char = config.char,
           half = config.half,
-          edit = config.edit;
+          edit = config.edit,
+          showStatus = config.showStatus,
+          statusColor = config.statusColor,
+          statusWidth = config.statusWidth,
+          statusFontSize = config.statusFontSize;
 
+      var selectedStars = stars.filter(function (star) {
+        return star.active;
+      });
       return stars.map(function (star, i) {
         var starClass = '';
         if (half && !halfStar.hidden && halfStar.at === i) {
@@ -237,19 +259,36 @@ var ReactStars = function (_Component) {
           cursor: edit ? 'pointer' : 'default',
           fontSize: size + 'px'
         });
+        var statusStyle = _extends({}, defaultStatusStyles, {
+          color: star.active ? '#C60C30' : statusColor,
+          width: statusWidth + 'px',
+          fontSize: statusFontSize + 'px'
+        });
+
+        var status = selectedStars.length === i + 1 ? _this2.props.status[i + 1] : '';
+
         return _react2.default.createElement(
           'span',
-          {
-            className: starClass,
-            style: style,
-            key: i,
-            'data-index': i,
-            'data-forhalf': char,
-            onMouseOver: _this2.mouseOver.bind(_this2),
-            onMouseMove: _this2.mouseOver.bind(_this2),
-            onMouseLeave: _this2.mouseLeave.bind(_this2),
-            onClick: _this2.clicked.bind(_this2) },
-          char
+          null,
+          _react2.default.createElement(
+            'span',
+            {
+              className: starClass,
+              style: style,
+              key: i,
+              'data-index': i,
+              'data-forhalf': char,
+              onMouseOver: _this2.mouseOver.bind(_this2),
+              onMouseMove: _this2.mouseOver.bind(_this2),
+              onMouseLeave: _this2.mouseLeave.bind(_this2),
+              onClick: _this2.clicked.bind(_this2) },
+            _react2.default.createElement(
+              'span',
+              { style: statusStyle },
+              showStatus && status
+            ),
+            char
+          )
         );
       });
     }
@@ -280,7 +319,10 @@ ReactStars.propTypes = {
   char: _propTypes2.default.string,
   size: _propTypes2.default.number,
   color1: _propTypes2.default.string,
-  color2: _propTypes2.default.string
+  color2: _propTypes2.default.string,
+  status: _propTypes2.default.object,
+  showStatus: _propTypes2.default.bool,
+  onHover: _propTypes2.default.func
 };
 
 ReactStars.defaultProps = {
@@ -292,7 +334,18 @@ ReactStars.defaultProps = {
   size: 15,
   color1: 'gray',
   color2: '#ffd700',
-
+  showStatus: true,
+  status: {
+    0: '',
+    1: 'Poor',
+    2: 'Fair',
+    3: 'Good',
+    4: 'Very Good',
+    5: 'Excellent'
+  },
+  statusColor: '#666',
+  statusFontSize: '12',
+  statusWidth: '80',
   onChange: function onChange() {}
 };
 
