@@ -8,10 +8,17 @@ const parentStyles = {
 
 const defaultStyles = {
   position: 'relative',
-  overflow: 'hidden',
   cursor: 'pointer',
   display: 'block',
   float: 'left'
+}
+
+const defaultStatusStyles = {
+  fontSize: '12px',
+  color: '#666',
+  float: 'left',
+  position: 'absolute',
+  width: '75px',
 }
 
 const getHalfStarStyles = (color, uniqueness) => {
@@ -58,6 +65,10 @@ class ReactStars extends Component {
       color2: props.color2,
       half: props.half,
       edit: props.edit,
+      showStatus: props.showStatus,
+      statusColor: props.statusColor,
+      statusFontSize: props.statusFontSize,
+      statusWidth: props.statusWidth,
     }
 
   }
@@ -118,8 +129,11 @@ class ReactStars extends Component {
     } else {
       index = index + 1
     }
+    if (this.props.onHover) {
+      this.props.onHover(index)
+    }
     this.setState({
-      stars: this.getStars(index)
+      stars: this.getStars(index),
     })
   }
 
@@ -173,8 +187,10 @@ class ReactStars extends Component {
   }
 
   renderStars() {
-    const { halfStar, stars, uniqueness, config } = this.state
-    const { color1, color2, size, char, half, edit } = config
+    const { halfStar, stars, uniqueness, config, currentStatus } = this.state
+    const { color1, color2, size, char, half, edit, showStatus, statusColor,
+    statusWidth, statusFontSize } = config
+    const selectedStars = stars.filter((star) => star.active);
     return stars.map((star, i) => {
       let starClass = ''
       if (half && !halfStar.hidden && halfStar.at === i) {
@@ -184,26 +200,38 @@ class ReactStars extends Component {
         color: star.active ? color2 : color1,
         cursor: edit ? 'pointer' : 'default',
         fontSize: `${size}px`
-      })
+      });
+      const statusStyle = Object.assign({}, defaultStatusStyles, {
+        color: star.active ? '#C60C30' : statusColor,
+        width: `${statusWidth}px`,
+        fontSize: `${statusFontSize}px`
+      });
+
+      const status = selectedStars.length === (i + 1) ? this.props.status[i + 1] : '';
+
       return (
-        <span
-          className={starClass}
-          style={style}
-          key={i}
-          data-index={i}
-          data-forhalf={char}
-          onMouseOver={this.mouseOver.bind(this)}
-          onMouseMove={this.mouseOver.bind(this)}
-          onMouseLeave={this.mouseLeave.bind(this)}
-          onClick={this.clicked.bind(this)}>
-          {char}
+        <span>
+          <span
+            className={starClass}
+            style={style}
+            key={i}
+            data-index={i}
+            data-forhalf={char}
+            onMouseOver={this.mouseOver.bind(this)}
+            onMouseMove={this.mouseOver.bind(this)}
+            onMouseLeave={this.mouseLeave.bind(this)}
+            onClick={this.clicked.bind(this)}>
+            <span style={statusStyle}>
+              {showStatus && status}
+            </span>
+            {char}
+          </span>
         </span>
       )
     })
   }
 
   render() {
-
     const {
       className
     } = this.props
@@ -228,7 +256,10 @@ ReactStars.propTypes = {
   char: PropTypes.string,
   size: PropTypes.number,
   color1: PropTypes.string,
-  color2: PropTypes.string
+  color2: PropTypes.string,
+  status: PropTypes.object,
+  showStatus: PropTypes.bool,
+  onHover: PropTypes.func
 }
 
 ReactStars.defaultProps = {
@@ -240,7 +271,18 @@ ReactStars.defaultProps = {
   size: 15,
   color1: 'gray',
   color2: '#ffd700',
-
+  showStatus: true,
+  status: {
+    0: '',
+    1: 'Poor',
+    2: 'Fair',
+    3: 'Good',
+    4: 'Very Good',
+    5: 'Excellent',
+  },
+  statusColor: '#666',
+  statusFontSize: '12',
+  statusWidth: '80',
   onChange: () => { }
 };
 

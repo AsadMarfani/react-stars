@@ -21,7 +21,7 @@ const secondExample = {
 
 const thirdExample = {
   size: 40,
-  count: 7,
+  count: 5,
   half: false,
   value: 4,
   onChange: newValue => {
