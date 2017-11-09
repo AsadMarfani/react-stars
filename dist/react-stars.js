@@ -85,9 +85,7 @@ var ReactStars = function (_Component) {
       half: props.half,
       edit: props.edit,
       showStatus: props.showStatus,
-      statusColor: props.statusColor,
-      statusFontSize: props.statusFontSize,
-      statusWidth: props.statusWidth
+      customStatusStyle: props.customStatusStyle
     };
 
     return _this;
@@ -145,6 +143,7 @@ var ReactStars = function (_Component) {
   }, {
     key: 'mouseOver',
     value: function mouseOver(event) {
+      this.setState({ hoverIndex: 0 });
       var _state = this.state,
           config = _state.config,
           halfStar = _state.halfStar;
@@ -252,9 +251,7 @@ var ReactStars = function (_Component) {
           half = config.half,
           edit = config.edit,
           showStatus = config.showStatus,
-          statusColor = config.statusColor,
-          statusWidth = config.statusWidth,
-          statusFontSize = config.statusFontSize;
+          customStatusStyle = config.customStatusStyle;
 
       var selectedStars = stars.filter(function (star) {
         return star.active;
@@ -269,11 +266,7 @@ var ReactStars = function (_Component) {
           cursor: edit ? 'pointer' : 'default',
           fontSize: size + 'px'
         });
-        var statusStyle = _extends({}, defaultStatusStyles, {
-          color: star.active ? '#C60C30' : statusColor,
-          width: statusWidth + 'px',
-          fontSize: statusFontSize + 'px'
-        });
+        var statusStyle = _extends({}, defaultStatusStyles, customStatusStyle);
 
         var status = hoverIndex === i + 1 || selectedStars.length === i + 1 ? _this2.props.status[i + 1] : '';
 
@@ -358,9 +351,11 @@ ReactStars.defaultProps = {
     4: 'Very Good',
     5: 'Excellent'
   },
-  statusColor: '#666',
-  statusFontSize: '12',
-  statusWidth: '80',
+  customStatusStyle: {
+    color: '#c60c30',
+    width: '80px',
+    top: '-5px'
+  },
   onChange: function onChange() {}
 };
 

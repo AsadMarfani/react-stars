@@ -70,9 +70,7 @@ class ReactStars extends Component {
       half: props.half,
       edit: props.edit,
       showStatus: props.showStatus,
-      statusColor: props.statusColor,
-      statusFontSize: props.statusFontSize,
-      statusWidth: props.statusWidth,
+      customStatusStyle: props.customStatusStyle,
     }
 
   }
@@ -122,6 +120,7 @@ class ReactStars extends Component {
   }
 
   mouseOver(event) {
+    this.setState({ hoverIndex: 0 });
     let { config, halfStar } = this.state
     if (!config.edit) return;
     let index = Number(event.target.getAttribute('data-index'))
@@ -197,8 +196,7 @@ class ReactStars extends Component {
 
   renderStars() {
     const { halfStar, stars, uniqueness, config, currentStatus, hoverIndex } = this.state
-    const { color1, color2, size, char, half, edit, showStatus, statusColor,
-    statusWidth, statusFontSize } = config
+    const { color1, color2, size, char, half, edit, showStatus, customStatusStyle } = config
     const selectedStars = stars.filter((star) => star.active);
     return stars.map((star, i) => {
       let starClass = ''
@@ -210,11 +208,7 @@ class ReactStars extends Component {
         cursor: edit ? 'pointer' : 'default',
         fontSize: `${size}px`
       });
-      const statusStyle = Object.assign({}, defaultStatusStyles, {
-        color: star.active ? '#C60C30' : statusColor,
-        width: `${statusWidth}px`,
-        fontSize: `${statusFontSize}px`
-      });
+      const statusStyle = Object.assign({}, defaultStatusStyles, customStatusStyle);
 
       const status = hoverIndex === (i + 1) || selectedStars.length === (i +1)
       ? this.props.status[i + 1] : '';
@@ -293,9 +287,11 @@ ReactStars.defaultProps = {
     4: 'Very Good',
     5: 'Excellent',
   },
-  statusColor: '#666',
-  statusFontSize: '12',
-  statusWidth: '80',
+  customStatusStyle: {
+    color: '#c60c30',
+    width: '80px',
+    top: '-5px',
+  },
   onChange: () => { }
 };
 
