@@ -56,7 +56,6 @@ class ReactStars extends Component {
         at: Math.floor(props.value),
         hidden: props.half && props.value % 1 < 0.5
       },
-      hoverIndex: 0,
     }
 
     this.state.config = {
@@ -120,7 +119,6 @@ class ReactStars extends Component {
   }
 
   mouseOver(event) {
-    this.setState({ hoverIndex: 0 });
     let { config, halfStar } = this.state
     if (!config.edit) return;
     let index = Number(event.target.getAttribute('data-index'))
@@ -137,7 +135,6 @@ class ReactStars extends Component {
     }
     this.setState({
       stars: this.getStars(index),
-      hoverIndex: index,
     })
   }
 
@@ -160,7 +157,6 @@ class ReactStars extends Component {
     }
     this.setState({
       stars: this.getStars(),
-      hoverIndex: 0,
     })
   }
 
@@ -195,7 +191,7 @@ class ReactStars extends Component {
   }
 
   renderStars() {
-    const { halfStar, stars, uniqueness, config, currentStatus, hoverIndex } = this.state
+    const { halfStar, stars, uniqueness, config, currentStatus } = this.state
     const { color1, color2, size, char, half, edit, showStatus, customStatusStyle } = config
     const selectedStars = stars.filter((star) => star.active);
     return stars.map((star, i) => {
@@ -210,7 +206,7 @@ class ReactStars extends Component {
       });
       const statusStyle = Object.assign({}, defaultStatusStyles, customStatusStyle);
 
-      const status = hoverIndex === (i + 1) || selectedStars.length === (i +1)
+      const status = selectedStars.length === (i + 1)
       ? this.props.status[i + 1] : '';
 
       return (

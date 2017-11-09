@@ -70,8 +70,7 @@ var ReactStars = function (_Component) {
       halfStar: {
         at: Math.floor(props.value),
         hidden: props.half && props.value % 1 < 0.5
-      },
-      hoverIndex: 0
+      }
     };
 
     _this.state.config = {
@@ -143,7 +142,6 @@ var ReactStars = function (_Component) {
   }, {
     key: 'mouseOver',
     value: function mouseOver(event) {
-      this.setState({ hoverIndex: 0 });
       var _state = this.state,
           config = _state.config,
           halfStar = _state.halfStar;
@@ -162,8 +160,7 @@ var ReactStars = function (_Component) {
         this.props.onHover(true, index);
       }
       this.setState({
-        stars: this.getStars(index),
-        hoverIndex: index
+        stars: this.getStars(index)
       });
     }
   }, {
@@ -192,8 +189,7 @@ var ReactStars = function (_Component) {
         this.props.onHover(false);
       }
       this.setState({
-        stars: this.getStars(),
-        hoverIndex: 0
+        stars: this.getStars()
       });
     }
   }, {
@@ -242,8 +238,7 @@ var ReactStars = function (_Component) {
           stars = _state5.stars,
           uniqueness = _state5.uniqueness,
           config = _state5.config,
-          currentStatus = _state5.currentStatus,
-          hoverIndex = _state5.hoverIndex;
+          currentStatus = _state5.currentStatus;
       var color1 = config.color1,
           color2 = config.color2,
           size = config.size,
@@ -268,7 +263,7 @@ var ReactStars = function (_Component) {
         });
         var statusStyle = _extends({}, defaultStatusStyles, customStatusStyle);
 
-        var status = hoverIndex === i + 1 || selectedStars.length === i + 1 ? _this2.props.status[i + 1] : '';
+        var status = selectedStars.length === i + 1 ? _this2.props.status[i + 1] : '';
 
         return _react2.default.createElement(
           'span',
