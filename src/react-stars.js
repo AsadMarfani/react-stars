@@ -193,7 +193,7 @@ class ReactStars extends Component {
   renderStars() {
     const { halfStar, stars, uniqueness, config, currentStatus } = this.state
     const { color1, color2, size, char, half, edit, showStatus, customStatusStyle } = config
-    const selectedStars = stars.filter((star) => star.active);
+    const selectedStars = stars.filter((star) => !!star.active);
     return stars.map((star, i) => {
       let starClass = ''
       if (half && !halfStar.hidden && halfStar.at === i) {
@@ -205,7 +205,7 @@ class ReactStars extends Component {
         fontSize: `${size}px`
       });
       const statusStyle = Object.assign({}, defaultStatusStyles, customStatusStyle);
-
+      console.log('selected', selectedStars.length);
       const status = selectedStars.length === (i + 1)
       ? this.props.status[i + 1] : '';
 
