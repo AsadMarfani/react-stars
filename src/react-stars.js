@@ -181,7 +181,7 @@ class ReactStars extends Component {
     }
     this.setState({
       value: value,
-      stars: this.getStars(index)
+      stars: this.getStars(index),
     })
     this.props.onChange(value)
   }
@@ -216,7 +216,8 @@ class ReactStars extends Component {
         fontSize: `${statusFontSize}px`
       });
 
-      const status = hoverIndex === (i + 1) ? this.props.status[i + 1] : '';
+      const status = hoverIndex === (i + 1) || selectedStars.length === (i +1)
+      ? this.props.status[i + 1] : '';
 
       return (
         <span key={i} >

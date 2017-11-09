@@ -275,7 +275,7 @@ var ReactStars = function (_Component) {
           fontSize: statusFontSize + 'px'
         });
 
-        var status = hoverIndex === i + 1 ? _this2.props.status[i + 1] : '';
+        var status = hoverIndex === i + 1 || selectedStars.length === i + 1 ? _this2.props.status[i + 1] : '';
 
         return _react2.default.createElement(
           'span',
