@@ -262,7 +262,6 @@ var ReactStars = function (_Component) {
           fontSize: size + 'px'
         });
         var statusStyle = _extends({}, defaultStatusStyles, customStatusStyle);
-        console.log('selected', selectedStars.length);
         var status = selectedStars.length === i + 1 ? _this2.props.status[i + 1] : '';
 
         return _react2.default.createElement(

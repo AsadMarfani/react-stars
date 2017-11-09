@@ -205,7 +205,6 @@ class ReactStars extends Component {
         fontSize: `${size}px`
       });
       const statusStyle = Object.assign({}, defaultStatusStyles, customStatusStyle);
-      console.log('selected', selectedStars.length);
       const status = selectedStars.length === (i + 1)
       ? this.props.status[i + 1] : '';
 
